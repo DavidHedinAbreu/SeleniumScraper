@@ -1,0 +1,47 @@
+Project directory structure:
+SeleniumScraper/
+	bin/
+		Scraper.class
+	lib/
+		selenium-api-4.8.3.jar
+		selenium-chrome-driver-4.8.3.jar
+		(many other jar dependencies downloaded from Selenium.dev/downloads)
+	src/
+		Scraper.java
+
+Compilation:
+The classpath option provides the directory to the jar dependencies. 
+The command below is written with the assumption that the current directory is src.  
+Otherwise, a relative or absolute classpath will have to be given to the source java file.
+In the class path, double dot 
+..
+changes directory up one level (to the SeleniumScraper directory), 
+/lib 
+changes directory to the lib folder, and 
+/* 
+adds all jars found there.
+The semicolon separates a second class path 
+;
+and the dot specifies that the current directory (src) is included as a path.
+The -d option specifies that the output folder will be up one level, in the bin folder.
+
+javac -classpath ../lib/*;. -d ../bin Scraper.java
+javac -d ..\bin -cp ..\lib\*;. "%f"
+
+Execution: 
+The classpath option provides the directory to the jar dependencies for execution.
+The java command assumes NOTHING about the current directory.
+Therefore, if the current directory is not specified, an exception will result:
+javalangclassnotfoundexception C:// ... Scraper 
+The JVM can't find Scraper.class. (Where is it looking for Scraper.class by default, then?)
+Therefore, the current directory 
+. 
+must be added as a second path in the classpath, using 
+;.
+Instead of the current directory, the bin folder may also be specified as the directory where the class file is located, 
+;..\bin
+Notice that double quotes must surround the entire class path so that spaces and other characters are included in the path.
+
+java -cp ".;..\lib\*" %e
+java -cp "..\lib\*;." %e
+java -cp "..\lib\*;..\bin" %e
